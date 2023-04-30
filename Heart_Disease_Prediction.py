@@ -3,7 +3,7 @@ from PIL import ImageTk, Image
 import pickle
 
 # Load the model
-with open('/Users/alec/Desktop/Informatics Degree/I 310 - HC Data Sci/Project/logistic_regression_model.pkl', 'rb') as f:
+with open('logistic_regression_model.pkl', 'rb') as f:
     model = pickle.load(f)
 
     
