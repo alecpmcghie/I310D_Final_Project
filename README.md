@@ -11,7 +11,8 @@ The goal of this project is to use logistic regression to predict heart disease 
 ## Dataset Review `Predicating_heart_disease.ipynb`
 
 #### Feature Importance
-To analyse the model we first needed to find the varibles that had the most significant effect on the outcome of the patients heart disease status. To find this we used the code below.
+This graph is showing a bar plot that shows the importance of input features in our  logistic regression model. From analyzing this graph we were able to adjust our hypothesis to be more focused on thallium and vessels of fluro. 
+
 ```python
 # Plot the feature importances (coefficients) of the logistic regression model
 plt.figure(figsize=(10,5))
@@ -51,7 +52,7 @@ print(feature_importance)
 
 
 #### Heat Map
-
+As shown above by the matrix, the inputs in the data set seem to have virtually no correlation. The highest correlation to heart disease in the data set is thallium and number of vessels fluro.
 
 ```python
 # Calculate the correlation matrix
@@ -67,7 +68,8 @@ plt.show()
 
 
 ## Model Creation `Predicating_heart_disease.ipynb`
-The creation of this model required us to use the Sklearn Lab Logistic Regression library to make the regression model. The process of creating the model is outlined in the python notebook in section 2. Below is a code block for all of the code we used to create the model.
+In this section we first use `train_test_split` to split the dataset into different sections for the logistic regression model to be trained on. After this we create the logistic regression model using Sklearn and fit the model using the `X_train` and `y_train` splits declared above. After fitting the model we then use the `X_test` data to make predictions using this model. 
+
 ```python
 # Split the data into training and testing sets
 X_train, X_test, y_train, y_test = train_test_split(heart_disease_features, 
@@ -84,8 +86,8 @@ logreg.fit(X_train, y_train)
 # Predict on the test data
 y_pred = logreg.predict(X_test)
 ```
+For the evaluation of this model we use  `accuracy_score`, `precision_score`, `recall_score`, and `f1_score` from `sklearn.metrics` to evaluate how well the model is predicting from the `y_train` and `y_test`
 
-After creating this model we evaluated the metrics with the code below and got the output
 ```python
 # Evaluate the model using various metrics such as accuracy, precision, recall, F1-score, etc.
 print('Accuracy:', accuracy_score(y_test, y_pred))
@@ -102,7 +104,7 @@ print('F1-score:', f1_score(y_test, y_pred))
 ## Model Analysis `Predicating_heart_disease.ipynb`
 
 #### Heart Disease by Age Range
-In this block of code we wanted to display the age ranges where heart disease is the most prevelent in the hospital data. For this we used `pyplot`.
+This visual is shown to help you better understand the distribution of heart disease among ages of both genders in our data set. These bar graphs provided insights regarding which age segments are more prone to developing cardiac complications and shows what age ranges males or females are experiencing heart disease more commonly. 
 ```python
 def calculate_hd_percentage(dataframe):
     heart_disease_count = dataframe['Heart Disease'].sum()
@@ -194,7 +196,7 @@ Here are the graphs that are displayed from this code segment
 ![image](https://user-images.githubusercontent.com/123593094/235364308-b70dd21b-89cc-4a7e-b32b-62ae7248390d.png)
 
 #### Analysing Exercise Angina
-The code below provides insight into the rates of heart disease as it relates to exercise angina in men and women
+This section was used to determine whether exercise-induced chest pain is a prominent danger for heart disease and evaluate any gender disparities which may exist. This helped us see if there was a significant risk with exercise angina and helped us see the commonalities across the genders.
 
 ```python
 # Split the data by gender
@@ -233,7 +235,7 @@ plt.show()
 ![image](https://user-images.githubusercontent.com/123593094/235365638-f0671509-e0ee-4edf-9bc6-80e9c7ec9af5.png)
 
 #### Blood Pressure
-
+In this bar graph you can see the relationship of the average levels of blood pressure correlated to patients with Heart Disease presence in both by Gender. From analyzing these bar graphs we were able to see the percentage of patients with heart disease and their level of blood pressure they are experiencing. We found that men are experiencing higher levels of blood pressure compared to women. As well this graph is where we noticed where our biases of our data set was most prevalent as the data set has fewer female than male data points, secondly the overall data point in the data is  100/183 males who have heart disease compared to women who have 20/80.
 
 ```python
 # Split the data by gender
@@ -280,7 +282,7 @@ ax2.set_title('Heart Disease by Blood Pressure Range for Females')
 ```
 
 #### Heart Disease by Gender
-
+This graph seperates the amount of heart disease cases in the dataset. Splitting the total positive cases into male and female to more easly see the representation of these two groups.
 
 ```python 
 # Split the data by gender
@@ -314,6 +316,7 @@ print(f'Female: {female_heart_disease_count} out of {len(female_df)} have heart 
 
 
 #### Thallium Test Levels by Gender 
+This bar graph shows the relationship between patients' results of a thallium stress test and the level of them that do have heart disease. From these graphs we were able to determine that men are experiencing more blockage & narrowing in the blood flow to their heart muscles more commonly across ages, compared to women who experience a very low blockage. A thallium stress test is diagnosed on 3 levels. Normal being scored as 3 means there's no blockage problems with the blood flow. A score of 6 is called a fixed defect where the blood flow to the segment is permanently reduced due to a blocked or narrowed artery, and a score of 7 indicates a reversible defect means the heart muscle reduces during the stress phase of the test but returns to normal during the rest phase. This tells doctors if the blood flow to that segment of the heart muscles are blocked. Reversible defect is an early indication of coronary artery disease. Doctors can analyze the scores of each segment of the heart, to determine the severity of blockages in the coronary arteries.
 
 ```python
 # Split the data by gender and thallium levels
@@ -353,7 +356,7 @@ plt.show()
 ![image](https://user-images.githubusercontent.com/123593094/235365779-e4e9151e-6486-4c1b-86cd-44f103b32a62.png)
 
 #### Thallium by Age and Gender
-
+We were able to determine similar results in this graph as seen in the previous visualization, but this graph provided deeper insight into the patients' ages. We found that Men are being diagnosed with reversible defects as young as 31 while females aren't being diagnosed with reversible defects until the age of 41. You don't see high spikes of reversible defects in women until the age of 61 or older. 
 ```python 
 import matplotlib.pyplot as plt
 
@@ -453,8 +456,7 @@ plt.show()
 ![image](https://user-images.githubusercontent.com/123593094/235365813-a0f9b2e7-05fd-4a3b-97b6-1e5dbe0c5f70.png)
 
 #### Number of Vessels of Fluro
-
-
+This bar graph represents the two groups, heart disease positive and negitive. These two groups are then seperated into the different groups of test results from the thallium test. This test is decribed further in the report but the basic idea of this test is the thallium levels in each chamber in the heart.
 ```python
 # Group the data by heart disease status and number of vessels fluro
 grouped_data = heart_disease_df.groupby(['Heart Disease', 'Number of vessels fluro']).size().reset_index(name='counts')
